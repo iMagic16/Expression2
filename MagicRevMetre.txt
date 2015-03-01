@@ -1,0 +1,80 @@
+@name MagicRevMetre
+@inputs EngineRPM Active
+@outputs IdleLEDG Green1LEDG Green2LEDG Green3LEDG OrangeLEDG OrangeLEDR RedLEDR
+@persist Powerband Redline Red Green Blue Orange
+@trigger all
+#Use INDICATORS for this
+
+Powerband = 4300 - 7000
+Redline = 7250
+
+interval(250)
+
+On = 255
+Off = 0
+
+if (EngineRPM>3500 & EngineRPM<4500){
+    IdleLEDG = On
+    Green1LEDG = On#
+    Green2LEDG = Off
+    Green3LEDG = Off
+    OrangeLEDG = Off
+    OrangeLEDR = Off
+    RedLEDR = Off
+}
+elseif (EngineRPM>4501 & EngineRPM<5500){
+    IdleLEDG = On
+    Green1LEDG = On
+    Green2LEDG = On#
+    Green3LEDG = Off
+    OrangeLEDG = Off
+    OrangeLEDR = Off
+    RedLEDR = Off
+}
+elseif (EngineRPM>5501 & EngineRPM<6750){
+       IdleLEDG = On
+    Green1LEDG = On
+    Green2LEDG = On
+    Green3LEDG = On#
+    OrangeLEDG = Off
+    OrangeLEDR = Off
+    RedLEDR = Off
+}
+elseif (EngineRPM>6751 & EngineRPM<6999){
+        IdleLEDG = On
+    Green1LEDG = On
+    Green2LEDG = On
+    Green3LEDG = On
+    OrangeLEDG = On#
+    OrangeLEDR = On#
+    RedLEDR = Off
+}
+elseif (EngineRPM>7000){
+        IdleLEDG = On
+    Green1LEDG = On
+    Green2LEDG = On
+    Green3LEDG = On
+    OrangeLEDG = On
+    OrangeLEDR = On
+    RedLEDR = On#
+}
+elseif(Active)
+{
+    IdleLEDG = On#
+    Green1LEDG = Off
+    Green2LEDG = Off
+    Green3LEDG = Off
+    OrangeLEDG = Off
+    OrangeLEDR = Off
+    RedLEDR = Off
+}
+else
+{
+    IdleLEDG = Off#
+    Green1LEDG = Off#
+    Green2LEDG = Off#
+    Green3LEDG = Off#
+    OrangeLEDG = Off#
+    OrangeLEDR = Off#
+    RedLEDR = Off#
+}

@@ -1,0 +1,16 @@
+@name Testing Shits
+@inputs LocationX LocationY LocationZ
+@outputs ScreenX ScreenY ScreenZ HoloZ
+@persist LocationXf LocationYf LocationZf 
+@trigger 
+
+runOnTick(1)
+
+LocationXf = floor(LocationX)
+LocationYf = floor(LocationY)
+LocationZf = floor(LocationZ)
+HoloZ = floor(LocationZ + 125)
+
+ScreenX = LocationXf 
+ScreenY = LocationYf
+ScreenZ = LocationZf

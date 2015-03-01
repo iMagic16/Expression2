@@ -1,0 +1,170 @@
+@name Maso's Chat Room
+@inputs CS:wirelink KB:wirelink A Name:entity On
+@outputs 
+@persist BTimer Y Char Cursor S:string Total Tog Join Leave SName:string
+
+interval(1)
+
+timer("find",1000)
+
+if(clk("find")) {
+    Total = findByClass("gmod_wire_expression2")
+    findIncludeModel("thruster_flat")
+}
+
+Tog = gGetNum("Tog")
+Join = gGetNum("Join")
+Leave = gGetNum("Leave")
+
+if(On&~On) {
+    Y = 1
+    S = ""
+    CS:writeCell(2041,1)
+    CS:writeString("Weclome To Maso's Chat Room",1,0,990)
+    CS:writeString("-":repeat(30),0,15)
+    soundPlay(Name:id(),1,"ambient/levels/citadel/pod_open1.wav")
+    KB:entity():setColor(255,255,255,150)
+}
+
+if((!On&~On)|first()) {
+    entity():setColor(0,0,0,0)
+    KB:entity():setColor(255,255,255,255)
+    CS:writeCell(2041,1)
+    CS:writeString("Press Use To Start Chat",4,5,900)
+    CS:writeString("PRESS "+toChar(34)+"ALT"+toChar(34)+" TO EXIT CHAT!",2,12,900)
+    gShare(1)
+    gSetGroup("MasoChat")
+
+}
+
+if(On) {
+
+    Char = 0
+    if((A >= 32&A <= 95)|(A >= 97&A <= 125)|(A >= 128&A <= 143)) {
+        Char = A
+        if(A >= 128&A <= 137) {Char = A-80}
+        if(A == 138) {Char = 47}
+        if(A == 139) {Char = 42}
+        if(A == 140) {Char = 45}
+        if(A == 141) {Char = 43}
+        if(A == 143) {Char = 46}
+    }
+    if(!A) {BTimer = 0}
+
+    #BackTimer
+    if(A == 127) {
+        timer("back",500)
+        if(clk("back")) {
+            BTimer = 1
+        }
+        if(BTimer) {timer("btimer",50)}
+    }
+
+    #Cursor
+    timer("cursor",500)
+    if(clk("cursor")&!A) {
+        Cursor = !Cursor
+        CS:writeString("_",S:length(),16,Cursor*999)
+    }
+
+    #Typing Main
+    if(Char&A&~A&S:length() < 60) {
+        soundPlay(Name:id()+1,0,"buttons/lightswitch2.wav")
+        CS:writeString(toChar(Char),S:length(),16)
+        S += toChar(Char)
+    }
+
+    #Typing Special
+    if((!Char&A&~A)|clk("btimer")) {
+        #Backspace
+        if(A == 127&S) {
+                soundPlay(Name:id()+2,0,"buttons/button15.wav")
+                S = S:left(S:length()-1)
+                CS:writeString("  ",S:length(),16)
+        }
+        #Enter
+        if(A == 13&S) {
+            gSetStr("Msg",S)
+            gSetStr("ID",Name:name():left(6):trim())
+            gSetNum("Color",Name:id())
+            S = ""
+            gSetNum("Tog",!gGetNum("Tog"))
+            if(!Total) {
+                CS:writeString("You Are Talking To Yourself",0,Y,900)
+                Y++
+            }
+        }
+    }
+
+    if($Tog) {
+        soundPlay(Name:id()+3,0.4,"friends/message.wav")
+        CS:writeCell(2039,16)
+        CS:writeCell(2039,17)
+        if(Y >= 13) {
+            CS:writeCell(2039,15)
+            if(Y == 13|Y == 14) {Y -= 2, CS:writeCell(2038,2)}
+            if(Y >= 15) {Y -= 3, CS:writeCell(2038,3)}
+            CS:writeString("-":repeat(30),0,15)
+        }
+        CS:writeString(gGetStr("ID")+": ",0,Y,((5+floor(gGetNum("Color")*5/2)%5)*100)+((5+floor(gGetNum("Color")*5/3)%5)*10)+(5+floor(gGetNum("Color")*5/5)%5))
+        CS:writeString(gGetStr("Msg"),gGetStr("ID"):length()+2,Y)
+        if(gGetStr("Msg"):length()+gGetStr("ID"):length()+2 <= 30) {Y++}
+        if(gGetStr("Msg"):length()+gGetStr("ID"):length()+2 > 30) {Y += 2}
+        if(gGetStr("Msg"):length()+gGetStr("ID"):length()+2 > 60) {Y++}
+   #     gSetNum(gGetNum()+1)
+        CS:writeString(S,0,16)
+    }
+    
+    if(Name&~Name) {
+        gSetStr("ID",Name:name():left(23))
+        gSetNum("Join",!gGetNum("Join"))
+        CS:writeCell(2039,17)
+        SName = Name:name()
+        KB:entity():setColor(0,0,0,0)
+    }
+
+    if($Join) {
+        soundPlay(Name:id()+4,1,"friends/friend_online.wav")
+        if(Y > 13) {
+            CS:writeCell(2039,15)
+            if(Y == 14) {Y -= 2, CS:writeCell(2038,2)}
+            if(Y >= 15) {Y -= 3, CS:writeCell(2038,3)}
+            CS:writeString("-":repeat(30),0,15)
+        }
+        CS:writeString(gGetStr("ID")+" Joined",0,Y,9)
+        Y++
+        CS:writeCell(2039,14)
+        CS:writeString(S,0,16)
+    }
+    
+    if(!Name&~Name) {
+        gSetStr("ID",SName:left(21))
+        gSetNum("Leave",!gGetNum("Leave"))
+        CS:writeCell(2039,16)
+        CS:writeCell(2039,17)
+        S = ""
+        SName = ""
+        KB:entity():setColor(255,255,255,150)
+    }
+    
+    if($Leave) {
+        soundPlay(Name:id()+5,1,"friends/friend_join.wav")
+        if(Y > 13) {
+            CS:writeCell(2039,15)
+            if(Y == 14) {Y -= 2, CS:writeCell(2038,2)}
+            if(Y >= 15) {Y -= 3, CS:writeCell(2038,3)}
+            CS:writeString("-":repeat(30),0,15)
+        }
+        CS:writeString(gGetStr("ID")+" Has Left",0,Y,900)
+        Y++
+        CS:writeCell(2039,14)
+        CS:writeString(S,0,16)
+    }
+}
+
+if(!On) {
+if($Tog) {}#gSetNum(gGetNum()+1)}
+    if(Name&~Name) {CS:writeString("PRESS THE RED BUTTON FIRST :O",0,0,900)}
+}
+
+#if(gGetNum() >= Total+1) {gSetNum(0)}

@@ -1,0 +1,52 @@
+@name TruckController
+@inputs W S R Space Mouse1 Mouse2 Speed Active
+@outputs DoorH Handbrake
+@persist Pitch 
+@trigger all
+#runOnTick(1)
+
+if (first())
+{
+soundPlay(1,0,"vehicles/diesel_loop2.wav")    
+}
+
+if (Active)
+{
+#    soundPlay(1,0,"vehicles/diesel_loop2.wav")   
+}
+Pitch = Speed / 35   
+    soundPitch(1,Pitch)
+if (W)
+{
+    
+}
+else
+{
+  #  Pitch = 50
+   # soundPitch(1,Pitch)
+}
+
+if (R)
+{
+ soundPlay(2,10,"vehicles/boat/boat_horn_1.wav")   
+}
+else
+{
+    #soundStop(2)
+}
+
+if (Space)
+{
+    Handbrake = 1
+}
+elseif (Active == 0)
+{
+    Handbrake = 1
+}
+else
+{
+ Handbrake = 0   
+}
+
+
+

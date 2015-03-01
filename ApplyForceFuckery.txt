@@ -1,0 +1,12 @@
+@name ApplyForceFuckery
+@inputs LookDir:vector GOGOGOGOGOGO
+@outputs 
+@persist E:entity
+@trigger all
+runOnTick(1)
+
+E = entity():isWeldedTo()
+
+if (GOGOGOGOGOGO == 1){
+ E:applyForce(LookDir)   
+}

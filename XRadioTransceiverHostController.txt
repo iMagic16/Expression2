@@ -1,0 +1,98 @@
+@name RadioTransceiverHostController
+@inputs SetTXPower SetTXMHz SetRXMHz SetOn SetCh1 SetCh2 SetCh3 SetCh4 Ch1Sig Ch2Sig Ch3Sig Ch4Sig Ch1Dbm:string Ch2Dbm:string Ch3Dbm:string Ch4Dbm:string
+@outputs TXPower TXMHz RXMHz On Ch1 Ch2 Ch3 Ch4 Ch1Dbm1:string Ch1Dbm2:string Ch2Dbm1:string Ch2Dbm2:string Ch3Dbm1:string Ch3Dbm2:string Ch4Dbm1:string Ch4Dbm2:string LED1 LED2 LED3 LED4
+@persist Tmp
+@trigger all
+
+if(first()){
+SetCh1 = 1
+SetCh2 = 26
+SetCh3 = 110
+SetCh4 = 15
+SetTXPower = 500#Watts, 200W+ = hurt
+SetTXMHz = 800#MHz
+SetRXMHz = 1200
+SetOn = 1
+}
+
+#foreach (S,Ch1Dbm:normal=Tmp){Ch1Dbm1 = S}
+if (Ch1Sig != 0){
+Ch1Dbm1 = Ch1Dbm:index(2)
+Ch1Dbm2 = Ch1Dbm:index(3)
+}
+else
+{
+Ch1Dbm1 = "0"
+Ch1Dbm2 = "0"    
+}
+if (Ch2Sig != 0){
+Ch2Dbm1 = Ch2Dbm:index(2)
+Ch2Dbm2 = Ch2Dbm:index(3)
+}
+else
+{
+Ch2Dbm1 = "0"
+Ch2Dbm2 = "0"    
+}
+if (Ch3Sig != 0){
+Ch3Dbm1 = Ch3Dbm:index(2)
+Ch3Dbm2 = Ch3Dbm:index(3)
+}
+else
+{
+Ch3Dbm1 = "0"
+Ch3Dbm2 = "0"    
+}
+if (Ch4Sig != 0){
+Ch4Dbm1 = Ch4Dbm:index(2)
+Ch4Dbm2 = Ch4Dbm:index(3)
+}
+else
+{
+Ch4Dbm1 = "0"
+Ch4Dbm2 = "0"    
+}
+##############################
+
+#LED control
+if (Ch1Sig == 1){
+LED1 = 1
+}
+else
+{
+    LED1 = 0
+}
+if (Ch2Sig == 1){
+LED2 = 1
+}
+else
+{
+    LED2 = 0
+}
+
+if (Ch3Sig == 1){
+LED3 = 1
+}
+else
+{
+    LED3 = 0
+}
+#LED 4 control
+if (Ch4Sig == 1){
+LED4 = 1
+}
+else
+{
+    LED4 = 0
+}
+
+
+Ch1 = SetCh1
+Ch2 = SetCh2
+Ch3 = SetCh3
+Ch4 = SetCh4
+
+On = SetOn
+TXMHz = SetTXMHz
+RXMHz = SetRXMHz
+TXPower = SetTXPower

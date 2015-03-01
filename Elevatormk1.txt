@@ -1,0 +1,26 @@
+@name LightShow
+@inputs Active
+@outputs X Y Z Colour:vector Fade Ground Line Size ActiveX
+@persist ToRandom
+@trigger 
+#Active = 0
+
+#if (Active == 1)
+
+runOnTick(50)
+
+Fade = 1
+Size = 4
+Line = 1
+Ground = 1
+ActiveX = Active 
+
+ToRandom = 512
+
+X = random(-(ToRandom), ToRandom)
+Y = random(-ToRandom, ToRandom)
+Z = random(-ToRandom, ToRandom)
+
+Colour = vec(X, Y, Z)
+
+

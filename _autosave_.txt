@@ -1,0 +1,144 @@
+@name MagicACF_ADV
+@inputs  Space W A S D R F Shift Alt Active CurGear
+@outputs EngineOn DisplayAdjustedGear SetGearboxGear Throttle Brake IndoorLight:vector FrontLight:vector FrontLightOn FrontLightDistance FrontLightFOV FrontLightBrightness BrakeLight:vector ReverseLight:vector BlinkL BlinkR
+@persist LightRed:vector DarkRed:vector Yellow:vector Blank:vector White:vector BrightWhite:vector
+@trigger all
+
+#ALT + R [Automatic Shift Up]
+#ALT + F [Automatic Shift Down]
+#ALT + Space [Engage Automatic Gearbox]
+#Space [Horn]
+#
+
+LightRed = vec(255, 0, 0)
+DarkRed = vec(128, 0, 0)
+Yellow = vec(128, 128, 0)
+White = vec(128, 128, 128)
+BrightWhite = vec(255, 255, 255)
+Blank = vec(0, 0, 0)
+Throttle = W * 9999
+
+
+DisplayAdjustedGear = CurGear - 1
+
+if(R){
+    if(EngineOn == 0){
+     EngineOn=1   
+    }
+    else
+        {
+            EngineOn=0
+       }
+}
+
+
+#interval(50)
+if(EngineOn){
+
+if (CurGear == 1){
+    ReverseLight = White    
+}
+    else
+    {
+       ReverseLight = Blank   
+}
+
+if(F){
+    if(FrontLight == Blank){
+        FrontLight = White
+        FrontLightDistance = 750
+        FrontLightBrightness = 5
+        FrontLightFOV = 100
+        FrontLightOn = 1
+       }
+       elseif(FrontLight == White){
+           FrontLight = BrightWhite
+           FrontLightOn = 1
+           FrontLightDistance = 2000
+           FrontLightBrightness = 8
+           FrontLightFOV = 60
+            }
+           else
+          {
+             FrontLight = Blank
+             FrontLightOn = 0
+      }  
+}
+
+if(Alt){
+    if(IndoorLight == Blank){
+     IndoorLight = White   
+    }
+    else
+    {
+     IndoorLight = Blank   
+    }
+}
+
+#Indicate Left
+if(A){
+    if(BlinkL){
+    BlinkL = 0
+    }
+    else
+        {
+        BlinkL = 1   
+    }  
+}
+elseif (Alt & A & D){
+    if (BlinkL & BlinkR){
+        BlinkL = 0 
+        BlinkR = 0  
+    }
+    else
+        {
+     BlinkL = 1
+     BlinkR = 1
+    }
+}
+else
+{
+ BlinkL = 0    
+}
+
+#Indicate Right
+if(D){
+    if(BlinkR){
+    BlinkR = 0
+    }
+    else
+        {
+        BlinkR = 1   
+    }
+}
+
+if (S){
+ Brake = 5
+ BrakeLight = LightRed
+}
+elseif (Active == 0)
+{
+ Brake = 5
+ BrakeLight = LightRed
+}
+else
+{
+ Brake = 0
+ BrakeLight = DarkRed
+}
+}
+else
+{
+
+Brake = 0
+Left = 0
+Right = 0
+IndoorLight = Blank
+FrontLight = Blank
+FrontLightOn = 0
+BrakeLight = Blank
+ReverseLight = Blank
+BlinkL = 0
+BlinkR = 0
+ 
+}

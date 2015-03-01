@@ -1,0 +1,13 @@
+@name LightShow
+@inputs 
+@outputs X Y Z 
+@persist 
+@trigger 
+
+runOnTick(1)
+
+X = random(-1024, 1024)
+
+Y = random(-1024, 1024)
+
+Y = random(-1024, 1024)

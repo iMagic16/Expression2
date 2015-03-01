@@ -1,0 +1,8 @@
+@name SuperDirectionalAntennaController
+@inputs OurAntennaLoc:vector AntennaToFaceLoc:vector 
+@outputs OurAntenna:vector AntennaToFace:vector
+@persist 
+@trigger all
+
+OurAntenna = OurAntennaLoc
+AntennaToFace = AntennaToFaceLoc

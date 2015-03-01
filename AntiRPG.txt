@@ -1,0 +1,25 @@
+@name AntiRPG
+@inputs RocketPos:entity Detected
+@outputs AdjustedAim:vector CurAim:vector CurVel:vector AlarmSound Force
+@persist 
+@trigger 
+
+runOnTick(1)
+Force = 50000
+
+if (Detected == 1)
+{
+    #soundPlay(1,20,"clock/tick.wav")  
+}
+
+#AdjustedAim
+CurAim = RocketPos:pos() #Unadjusted Direction
+#print("Current Aiming vector: " + CurAim:toString())
+
+CurVel = RocketPos:vel()
+#print("Current Moving velocity: " + CurVel:toString())
+
+#get that shit outta heer
+RocketPos:applyForce(vec(0,0,50000))#314   z is up down
+
+AdjustedAim = CurAim# - CurVel #Direction taking into account velocity

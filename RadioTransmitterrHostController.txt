@@ -1,0 +1,58 @@
+@name RadioTransmitterHostController
+@inputs SetTXPower SetMHz SetOn RCh1 RCh2 RCh3 RCh4 SigCh1 SigCh2 SigCh3 SigCh4
+@outputs TXPower MHz On Ch1 Ch2 Ch3 Ch4 LED1:vector LED2:vector LED3:vector LED4:vector
+@persist 
+@trigger all
+
+if(first()){
+RCh1 = 1
+RCh2 = 26
+RCh3 = 110
+RCh4 = 15
+SetTXPower = 1025#Watts, 200W+ = hurt
+SetMHz = 1200#MHz
+SetOn = 1
+}
+
+#LED control
+if (SigCh1 == 1){
+LED1 = vec(0,255,0)
+}
+else
+{
+    LED1 = vec(255,0,0)
+}
+if (SigCh2 == 1){
+LED2 = vec(0,255,0)
+}
+else
+{
+    LED2 = vec(255,0,0)
+}
+
+if (SigCh3 == 1){
+LED3 = vec(0,255,0)
+}
+else
+{
+    LED3 = vec(255,0,0)
+}
+#LED 4 control
+if (SigCh4 == 1){
+LED4 = vec(0,255,0)
+}
+else
+{
+    LED4 = vec(255,0,0)
+}
+
+
+
+Ch1 = RCh1
+Ch2 = RCh2
+Ch3 = RCh3
+Ch4 = RCh4
+
+On = SetOn
+MHz = SetMHz
+TXPower = SetTXPower

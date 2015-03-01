@@ -1,0 +1,64 @@
+@name 
+@inputs Speed W Active Space LMB RMB R 
+@outputs Pitch Sound Handbrake Door DoorScreen Horn 
+@persist E:entity
+@trigger all
+Pitch=Speed/35
+
+E = entity()
+
+if(W==0)
+{
+    Sound=1
+        soundPlay(1,0,"vehicles/diesel_loop2.wav")
+    soundPitch(1,Pitch)
+    #soundplay(ID,Time,DIR)
+    #soundpitch(ID,PITCH)
+    #change the ID for each new sound
+} 
+else 
+{
+    Sound=0
+}
+if (Active==0)
+{
+    Handbrake=1
+} 
+else
+{
+    Handbrake=0
+
+}
+
+if (Space)
+{
+    Handbrake=1
+}
+if (LMB)
+{
+    Door=80
+}
+if (LMB)
+{
+    DoorScreen=1
+}
+if (RMB)
+{
+    Door=0
+}
+if (RMB)
+{
+    DoorScreen=0
+}
+if (R)
+{
+    soundPlay(2,0,"vehicles/diesel_loop2.wav")
+    Horn=1
+} 
+else
+{
+    Horn=0
+}
+
+
+

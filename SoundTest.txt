@@ -1,0 +1,13 @@
+@name SoundTest
+@inputs 
+@outputs 
+@persist E:entity
+@trigger all
+
+#runOnTick(1)
+
+
+E = entity()
+
+soundPlay(1,0,"vehicles/diesel_loop2.wav")
+

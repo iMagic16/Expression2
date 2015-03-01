@@ -1,0 +1,25 @@
+@name Test
+@inputs 
+@outputs 
+@persist 
+@trigger 
+ runOnTick(1)
+
+
+
+while (true)
+{
+
+A = 0
+
+if ( A==0 ) 
+  {
+    A == 1
+}
+
+if ( A == 1 )
+  {
+    A == 0
+}
+
+}

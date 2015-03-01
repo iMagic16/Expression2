@@ -1,0 +1,47 @@
+@name MagicACF
+@inputs W Spacebar A D Active S
+@outputs Throttle Brake Left Right RightBlinkers:vector LeftBlinkers:vector BrakeLight:vector
+@persist LightRed:vector DarkRed:vector Yellow:vector Blank:vector
+@trigger all
+interval(50)
+LightRed = vec(255, 0, 0)
+DarkRed = vec(128, 0, 0)
+Yellow = vec(128, 128, 0)
+Blank = vec(0, 0, 0)
+Left = A * 150
+Right = D * 150
+
+if (A){
+ LeftBlinkers = Yellow   
+}
+else
+{
+    LeftBlinkers = Blank
+}
+
+if (D){
+    RightBlinkers = Yellow   
+}
+else
+{
+    RightBlinkers = Blank
+}
+
+Throttle = W * 9999
+
+if (Spacebar){
+ Brake += 0.20  
+ BrakeLight = LightRed
+}
+elseif (Active == 0)
+{
+    Brake = 6
+    BrakeLight = LightRed
+}
+else
+{
+    Brake = 0
+    BrakeLight = DarkRed
+}
+
+

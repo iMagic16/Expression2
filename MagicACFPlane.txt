@@ -1,0 +1,34 @@
+@name MagicACFPlane
+@inputs Space W A S D Active 
+@outputs Throttle Brake Left Right
+@persist 
+@trigger all
+
+#Throttle = W * 9999
+Left = A * 150
+Right = D * 150
+
+interval(250)
+if (W){
+ Throttle += 2.5  
+}
+elseif(S){
+ Throttle -= 2.5   
+}
+elseif (Active == 0){
+ if (Throttle > 15){
+    Throttle -= 2.5  
+  }
+}
+
+if (Space){
+ Brake = 0.05  
+}
+elseif (Active == 0)
+{
+ #Brake = 0.05
+}
+else
+{
+ Brake = 0
+}

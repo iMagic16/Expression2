@@ -1,0 +1,82 @@
+@name MagicRevMetre_TimoCar
+@inputs EngineRPM Active
+@outputs IdleLEDG Green1LEDG Green2LEDG Green3LEDG OrangeLEDG OrangeLEDR RedLEDR
+@persist Powerband Redline Red Green Blue Orange
+@trigger all
+#Use INDICATORS for this
+
+Powerband = 2200 - 3600
+Redline = 5000
+
+
+#runOnTick(1)
+On = 255
+Off = 0
+
+
+
+if (EngineRPM>2200 & EngineRPM<2699){
+    IdleLEDG = On
+    Green1LEDG = On#
+    Green2LEDG = Off
+    Green3LEDG = Off
+    OrangeLEDG = Off
+    OrangeLEDR = Off
+    RedLEDR = Off
+}
+elseif (EngineRPM>2700 & EngineRPM<3299){
+    IdleLEDG = On
+    Green1LEDG = On
+    Green2LEDG = On#
+    Green3LEDG = Off
+    OrangeLEDG = Off
+    OrangeLEDR = Off
+    RedLEDR = Off
+}
+elseif (EngineRPM>3300 & EngineRPM<3599){
+    IdleLEDG = On
+    Green1LEDG = On
+    Green2LEDG = On
+    Green3LEDG = On#
+    OrangeLEDG = Off
+    OrangeLEDR = Off
+    RedLEDR = Off
+}
+elseif (EngineRPM>3600 & EngineRPM<4500){
+    IdleLEDG = On
+    Green1LEDG = On
+    Green2LEDG = On
+    Green3LEDG = On
+    OrangeLEDG = On#
+    OrangeLEDR = On#
+    RedLEDR = Off
+}
+elseif (EngineRPM>4500){
+    IdleLEDG = On
+    Green1LEDG = On
+    Green2LEDG = On
+    Green3LEDG = On
+    OrangeLEDG = On
+    OrangeLEDR = On
+    RedLEDR = On#
+}
+elseif(Active)
+{
+    IdleLEDG = On
+    Green1LEDG = Off
+    Green2LEDG = Off
+    Green3LEDG = Off
+    OrangeLEDG = Off
+    OrangeLEDR = Off
+    RedLEDR = Off
+}
+else
+{
+    IdleLEDG = Off
+    Green1LEDG = Off
+    Green2LEDG = Off
+    Green3LEDG = Off
+    OrangeLEDG = Off
+    OrangeLEDR = Off
+    RedLEDR = Off
+}

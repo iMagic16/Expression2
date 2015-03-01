@@ -1,0 +1,25 @@
+@name CurPlaytime
+@inputs 
+@outputs 
+@persist TimeCon Minutes Hours
+@trigger 
+
+runOnChat(1)
+
+TimeCon = ceil(owner():timeConnected())
+Minutes = ceil(TimeCon / 60)
+Hours = Minutes / 60
+
+#print(TimeCon)
+#print(Minutes)
+#print(Hours)
+if(first())
+{
+    print("Type !playtime into chat to know how long you've been playing")
+}
+
+if (lastSaid() == "!playtime") 
+{
+    print("Your playtime is: " + Hours + " hours, " + Minutes + " minutes and " + TimeCon + " seconds." ) 
+}
+  

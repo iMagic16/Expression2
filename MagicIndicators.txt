@@ -1,0 +1,72 @@
+@name MagicIndicators
+@inputs BlinkMeLeft BlinkMeRight
+@outputs BlinkerLeft:vector BlinkerRight:vector
+@persist Off:vector On:vector BlinkLeftOff BlinkLeftOn BlinkRightOff BlinkRightOn TimeBetweenBlinks
+@trigger all
+Off = vec(0,0,0)
+On = vec(192,192,0)
+TimeBetweenBlinks = 500 #milliseconds
+
+if (BlinkMeLeft){
+ timer("blink-l", TimeBetweenBlinks)
+}
+else
+{
+    stoptimer("blink-l")
+    BlinkerLeft = Off
+}
+
+if (BlinkMeLeft & clk("blink-l")){
+ if(BlinkerLeft == Off){
+    BlinkerLeft = On
+    } 
+    else 
+    {
+        BlinkerLeft = Off
+        }
+}
+
+
+if (BlinkMeRight){
+ timer("blink-r", TimeBetweenBlinks)
+}
+else
+{
+    stoptimer("blink-r")
+    BlinkerRight = Off
+}
+
+if (BlinkMeRight & clk("blink-r")){
+ if(BlinkerRight == Off){
+    BlinkerRight = On
+    } 
+    else 
+    {
+        BlinkerRight = Off
+        }
+}
+
+
+
+#if (BlinkMeBoth){
+#    timer("blink-both", TimeBetweenBlinks)
+#}
+##else
+#{
+# stoptimer("blink-both")
+# BlinkerRight = Off
+# BlinkerLeft = Off  
+#}
+#
+#if (BlinkMeBoth & clk("blink-both")){
+#    if(BlinkerRight == Off){
+#    BlinkerRight = On
+#    BlinkerLeft = On
+#    } 
+#    else 
+#    {
+#        BlinkerRight = Off
+#        BlinkerLeft = Off
+#        }
+#}
+
